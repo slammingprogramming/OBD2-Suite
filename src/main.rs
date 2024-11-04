@@ -1,16 +1,14 @@
-mod obd_protocol;
+mod config;
 mod data_parser;
+mod diagnostics;
 mod gui;
+mod obd_protocol;
+mod real_time_monitor;
 mod report_generator;
+mod vehicle_data;
 
-use obd_protocol::OBDInterface;
-use gui::launch_gui;
+use gui::run_gui;
 
-#[tokio::main]
-async fn main() {
-    println!("Universal OBD-II Debugging Suite Initializing...");
-    let obd_interface = OBDInterface::new();
-    
-    // Initialize GUI
-    launch_gui(&obd_interface);
+fn main() {
+    run_gui();
 }

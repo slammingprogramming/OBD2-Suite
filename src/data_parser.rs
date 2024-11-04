@@ -1,11 +1,21 @@
-pub fn parse_dtc(data: &[u8]) -> Option<u32> {
-    if data.len() >= 3 {
-        Some(u32::from_be_bytes([data[0], data[1], data[2], 0]))
-    } else {
-        None
-    }
+use serde::Deserialize;
+use std::fs;
+
+#[derive(Deserialize)]
+pub struct VehicleData {
+    pub vin: String,
+    pub dtcs: Vec<String>,
+    pub engine_data: EngineData,
 }
 
-pub fn interpret_dtc(code: u32) -> String {
-    format!("Diagnostic Trouble Code {} interpretation", code)
+#[derive(Deserialize)]
+pub struct EngineData {
+    pub rpm: u32,
+    pub speed: u32,
+    pub coolant_temp: f32,
+}
+
+pub fn parse_vehicle_data(file_path: &str) -> VehicleData {
+    let data = fs::read_to_string(file_path).expect("Unable to read file");
+    serde_json::from_str(&data).expect("JSON was not well-formatted")
 }

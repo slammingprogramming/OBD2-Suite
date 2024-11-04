@@ -1,6 +1,6 @@
 [package]
 name = "obd2_debugging_suite"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2024"
 
 [dependencies]
@@ -9,3 +9,4 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 serialport = "4.0.1"
 gtk = { version = "0.9", features = ["v3_22"] }
+rfd = "0.8"

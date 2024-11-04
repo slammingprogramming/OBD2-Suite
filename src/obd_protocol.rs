@@ -1,31 +1,19 @@
-use serialport::prelude::*;
-use std::time::Duration;
-use std::io::{self, Write};
-
-pub struct OBDInterface {
-    pub protocol: String,
+pub enum OBDProtocol {
+    ISO9141_2,
+    ISO14230_4,
+    ISO15765_4,
+    SAE_J1850_PWM,
+    SAE_J1850_VPW,
 }
 
-impl OBDInterface {
-    pub fn new() -> Self {
-        OBDInterface {
-            protocol: "ISO 15765-4 (CAN-BUS)".to_string(),
+impl OBDProtocol {
+    pub fn as_str(&self) -> &str {
+        match self {
+            OBDProtocol::ISO9141_2 => "ISO 9141-2",
+            OBDProtocol::ISO14230_4 => "ISO 14230-4 (KWP2000)",
+            OBDProtocol::ISO15765_4 => "ISO 15765-4 (CAN-BUS)",
+            OBDProtocol::SAE_J1850_PWM => "SAE J1850 PWM",
+            OBDProtocol::SAE_J1850_VPW => "SAE J1850 VPW",
         }
-    }
-
-    pub fn connect(&self) -> io::Result<()> {
-        // Connect to the vehicle's OBD-II port with serial settings
-        println!("Connecting using protocol: {}", self.protocol);
-        Ok(())
-    }
-
-    pub fn retrieve_data(&self) -> Vec<u8> {
-        // Sample data retrieval (replace with actual OBD-II logic)
-        vec![0x01, 0x02, 0xA0]
-    }
-
-    pub fn interpret_code(&self, code: u32) -> String {
-        // DTC interpretation logic
-        format!("Interpretation of DTC code: {:X}", code)
     }
 }
